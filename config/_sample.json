@@ -15,5 +15,6 @@
     "shellCommand": "/bin/bash",
     "logTidy": "0 1 * * *",
     "logRm": "1 1 * * *"
-  }
+  },
+  "language": "cn"
 }

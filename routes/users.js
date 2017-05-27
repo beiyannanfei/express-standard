@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var mLockSend = require("../middlewares/lockSend.js");
 var logger = require("../utils/log")(__filename);
+var Joi = require("joi");
+var mJoiValidate = require("../tools/joiValidate.js");
+
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -20,6 +23,23 @@ router.get("/lock", mLockSend.addLock("myTest", "a"), function (req, res) {
 router.get("/fact", function (user, req, res) {
 	logger.debug("user: %s", user);
 	return res.lockSend(user);
+});
+
+//curl "127.0.0.1:3000/users/joi?a=abc&b=123"
+router.get("/joi", function (req, res) {
+	let schema = {
+		a: Joi.string().uri(),
+		b: Joi.number()
+	};
+	let checkObj = {
+		a: req.query.a,
+		b: req.query.b
+	};
+	let error = mJoiValidate.checkParam(checkObj, schema);
+	if (!!error) {
+		return res.lockSend(400, error);
+	}
+	return res.lockSend("success");
 });
 
 module.exports = router;

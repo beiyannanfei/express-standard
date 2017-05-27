@@ -1,4 +1,5 @@
 require('express-di');
+require("./tools/joiValidate");     //首先替换joi中文包
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');

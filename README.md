@@ -151,6 +151,15 @@ user即为注入变量,变量名称需要与factories目录中文件名相同,�
     }
 ```
 
+#### 8. Joi参数校验模块(支持中文提示,中文提示持续修正中)
+
+Joi使用方法参考[API Reference.](https://github.com/hapijs/joi/blob/v10.5.0/API.md)
+
+配置文件中添加语言项,cn: 为中文错误提示, en: 为英文错误提示
+```
+    "language": "cn"
+```
+
 
 
 
