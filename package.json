@@ -1,0 +1,35 @@
+{
+  "name": "express-standard",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "jade": "~1.11.0",
+    "morgan": "~1.8.1",
+    "serve-favicon": "~2.4.2"
+  },
+  "description": "express Initialization",
+  "main": "/bin/www",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beiyannanfei/express-standard.git"
+  },
+  "keywords": [
+    "express",
+    "standard",
+    "Initialization"
+  ],
+  "author": "beiyannanfei",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beiyannanfei/express-standard/issues"
+  },
+  "homepage": "https://github.com/beiyannanfei/express-standard#readme"
+}
