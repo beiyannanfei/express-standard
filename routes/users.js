@@ -42,5 +42,12 @@ router.get("/joi", function (req, res) {
 	return res.lockSend("success");
 });
 
+// curl "127.0.0.1:3000/users/sess"
+router.get("/sess", function (user, req, res) {
+	req.session.uid = user.uid;
+	user.sessionID = req.sessionID;
+	return res.lockSend(user);
+});
+
 module.exports = router;
 

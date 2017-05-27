@@ -7,6 +7,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mLockSend = require("./middlewares/lockSend.js");
+var session    = require('express-session');
+var RedisStore = require('connect-redis')(session);
+var config = require('config');
 
 var app = express();
 
@@ -22,6 +25,26 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./middlewares/formParser')());
+
+app.set('sessionStore', new RedisStore({client: require("./utils/createRedisClient")()}));
+app.use(session({
+	secret: config.sessionSecret,
+	name: 'express-standard',
+	store: app.get('sessionStore'),
+	resave: false,
+	rolling: true,
+	saveUninitialized: false,
+	cookie: { maxAge: 24 * 60 * 60 * 1000 }
+}));
+
+app.use(function(req, res, next) {
+	res.header('Access-Control-Allow-Origin', req.headers.origin);
+	res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT, PATCH, OPTIONS');
+	res.header('Access-Control-Allow-Headers',
+		'Origin, X-Requested-With, X-Session-ID, X-Media-Type, Content-Type, Accept, Authorization');
+	res.header('Access-Control-Allow-Credentials', 'true');
+	next();
+});
 
 app.use(mLockSend.lockSend());    //统一数据回复格式
 
