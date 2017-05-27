@@ -4,7 +4,7 @@
  */
 "use strict";
 const _ = require("lodash");
-const rc = require("../utils/createRedisClient.js").createRedisClient();
+const rc = require("../utils/createRedisClient.js")();
 const Bluebird = require("bluebird");
 
 

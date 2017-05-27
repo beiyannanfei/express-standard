@@ -9,7 +9,7 @@ const config = require('config');
  * @param options
  * @returns {*}
  */
-exports.createRedisClient = function (options) {
+module.exports = function (options) {
 	options = options || {};
 	options.host = options.host || config.redis.host;
 	options.port = options.port || config.redis.port;
