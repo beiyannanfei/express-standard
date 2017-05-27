@@ -1,9 +1,13 @@
-var express = require('express');
-var router = express.Router();
+var routers = require("require-directory")(module);
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+module.exports = function (app) {
+	Object.keys(routers).forEach(item => {    //批量处理route文件夹中的路由文件
+		if (item !== "index") {
+			app.use("/" + item, routers[item]);
+		}
+	});
 
-module.exports = router;
+	app.get("/", (req, res) => {
+		res.render('index', {title: 'Express-standard Version: 0.0.1'});
+	})
+};
