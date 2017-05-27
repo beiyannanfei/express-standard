@@ -4,7 +4,9 @@
  */
 "use strict";
 const _ = require("lodash");
-const rc = require("../utils/createRedisClient.js");
+const rc = require("../utils/createRedisClient.js").createRedisClient();
+const Bluebird = require("bluebird");
+
 
 /**
  * 删除并发锁
@@ -18,6 +20,10 @@ var delLock = exports.delLock = function (lockId) {
 	rc.del(lockId);
 };
 
+/**
+ * 统一数据回调格式,去掉并发锁
+ * @returns {Function}
+ */
 exports.lockSend = function () {
 	return function (req, res, next) {
 		res.lockSend = function (code, data) {
@@ -33,5 +39,28 @@ exports.lockSend = function () {
 			return res.send(code);
 		};
 		return next();
+	}
+};
+
+/**
+ * 添加并发请求锁
+ * @param prefix
+ * @param param
+ * @returns {Function}
+ */
+exports.addLock = function (prefix, param) {
+	return function (req, res, next) {
+		req.lockId = "Concurrent-" + prefix + "-" + (req.query[param] || req.body[param] || req.params[param]);   //并发所有ID
+		Bluebird.all([
+			rc.incr(req.lockId),    //原子性保证并发锁
+			rc.expire(req.lockId, 10)      //10秒自动删除并发锁
+		]).spread((value, expire) => {
+			if (+value > 1) {             //出现并发情况
+				return res.send({status: "error", code: 400, data: "请求太频繁!"});
+			}
+			return next();
+		}).catch(err => {
+			return next();
+		});
 	}
 };

@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development node ./bin/www"
+    "start": "NODE_ENV=development node ./bin/www"
   },
   "dependencies": {
+    "bluebird": "^3.5.0",
     "body-parser": "~1.17.1",
     "config": "^1.26.1",
     "cookie-parser": "~1.4.3",

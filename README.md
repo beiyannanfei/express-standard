@@ -61,3 +61,27 @@ test.json文件内容为
     res.lockSend(401, "response failure");
 ```
 
+#### 4. 接口并发锁
+
+在路由中使用中间件addLock,添加并发锁(注意: 建议是对请求中的某个参数防止并发,而不是接口整体防止并发)
+
+`参数说明:`  
+
+| 参数   |  说明      | 必须|
+|:------: |:----------: | :----: |
+| prefix | 并发锁前缀,每个路由不重复 | Y
+| param  | 对哪个参数防止并发 | Y
+
+
+例如: 代码如下,则是对请求中的参数a使用"myTest"前缀添加并发锁,
+     http://127.0.0.1:3000/users/lock?a=10
+     http://127.0.0.1:3000/users/lock?a=10 同时访问则会触发并发锁
+     http://127.0.0.1:3000/users/lock?a=20
+     http://127.0.0.1:3000/users/lock?a=30 同时访问则正常
+```
+    router.get("/lock", mLockSend.addLock("myTest", "a"), function (req, res) {
+    	setTimeout(() => {
+    		return res.lockSend("success!");
+    	}, 5000);
+    });
+```
