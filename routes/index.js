@@ -1,3 +1,6 @@
+/**
+ * Created by wyq on 17/5/27.
+ */
 var routers = require("require-directory")(module);
 
 module.exports = function (app) {

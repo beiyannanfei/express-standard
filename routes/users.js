@@ -13,5 +13,12 @@ router.get("/lock", mLockSend.addLock("myTest", "a"), function (req, res) {
 	}, 5000);
 });
 
+/**
+ * user 为依赖注入变量,变量名称必须和factories目录中文件名称相同
+ */
+router.get("/fact", function (user, req, res) {
+	return res.lockSend(user);
+});
+
 module.exports = router;
 

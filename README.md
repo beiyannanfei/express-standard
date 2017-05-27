@@ -85,3 +85,45 @@ test.json文件内容为
     	}, 5000);
     });
 ```
+
+#### 5. 依赖注入
+
+首先在factories目录添加要注入的模块,类似如下(next第二个参数为注入内容):
+user.js
+```
+    module.exports = function () {
+    	return function (req, res, next) {
+    		return next(null, {uid: "abc123", nickName: "Jack", age: 25});
+    	}
+    };
+```
+路由中使用方法:
+user即为注入变量,变量名称需要与factories目录中文件名相同,即user对应user.js文件
+```
+    router.get("/fact", function (user, req, res) {
+    	return res.lockSend(user);
+    });
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
