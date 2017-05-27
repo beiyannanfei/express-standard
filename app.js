@@ -26,6 +26,7 @@ app.use(mLockSend.lockSend());    //统一数据回复格式
 
 require("./routes")(app);     //路由处理
 require('./factories')(app);  //依赖注入
+require('./cronjob');         //定时任务
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

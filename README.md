@@ -105,6 +105,41 @@ user即为注入变量,变量名称需要与factories目录中文件名相同,�
     });
 ```
 
+#### 6. 日志
+
+日志文件已 YYYYMMDD-fileName.log 作为文件名称,使用时只需要引入log模块,并传入文件名称即可
+例如: 则日志文件会以当前文件名称作为fileName,也可以直接传入想要的文件名
+```
+    var logger = require("../utils/log")(__filename);
+    var logger = require("../utils/log")("myLogFileName");
+```
+配置文件释义:
+```
+    "logger": {
+        "logDir": "/logs",  //日志保存目录
+        "level": "debug",   //日志输出最低级别
+        "output": true      //是否输出日志到终端
+    }
+```
+日志文件每天都会打包保存,以节省空间,打包后的文件保存在logs.gzip目录中,打包文件60天自动删除,
+可以通过修改./cronjob/logRm.sh文件中60的参数改变打包日志的保存时间(仅linux系统生效)
+```
+    n=$((60*86400))     #保留60天
+```
+
+#### 7. 定时任务
+
+采用crontab实现定时任务,使用方法为直接在cronjob目录中添加*.js或*.sh脚本,同时在配置文件中添加执行周期即可,格式参考[百度百科](http://baike.baidu.com/link?url=tMlX4HiIvNylI0xdYBqPOJgtOMNx0Fbrp56ZcfNrdbvNor_S_yxjxc_Ifsi3eBHDxfNJJ4waSQmlYjJ703sGM_)
+配置文件释义:
+```
+    "crontab": {
+        "comment": "express-standard-crontab",                          //crontab任务分组,建议和项目名称同
+        "nodeCommand": "NODE_ENV=development /usr/local/bin/node",      //node程序位置,启动脚本使用环境变量
+        "shellCommand": "/bin/bash",                                    //bash位置
+        "logTidy": "0 1 * * *",                                         //logTidy脚本执行周期
+        "logRm": "1 1 * * *"
+    }
+```
 
 
 

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mLockSend = require("../middlewares/lockSend.js");
+var logger = require("../utils/log")(__filename);
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -17,6 +18,7 @@ router.get("/lock", mLockSend.addLock("myTest", "a"), function (req, res) {
  * user 为依赖注入变量,变量名称必须和factories目录中文件名称相同
  */
 router.get("/fact", function (user, req, res) {
+	logger.debug("user: %s", user);
 	return res.lockSend(user);
 });
 
