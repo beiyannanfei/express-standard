@@ -49,5 +49,25 @@ router.get("/sess", function (user, req, res) {
 	return res.lockSend(user);
 });
 
+// curl "127.0.0.1:3000/users/down"
+router.get("/down", function (req, res) {   //文件下载
+	let path = "/Users/sensoro/bynf/express-standard/README.md";
+	return res.download(path, "down_test");
+});
+
+// curl "127.0.0.1:3000/users/add" -d "name=wyq&age=28&addr=beijing"
+router.post("/add", function (req, res) {
+	let doc = {
+		name: req.body.name,
+		age: +req.body.age,
+		addr: req.body.addr
+	};
+	User.create(doc).then(response => {
+		return res.lockSend(response);
+	}).catch(err => {
+		return res.lockSend(400, err.message || err);
+	});
+});
+
 module.exports = router;
 

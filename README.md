@@ -160,9 +160,39 @@ Joi使用方法参考[API Reference.](https://github.com/hapijs/joi/blob/v10.5.0
     "language": "cn"
 ```
 
+#### 9. mongodb数据库配置
 
+配置文件释义:
+```
+    "mongodb": {
+        "host": "localhost",        //主库地址
+        "database": "test",         //数据库名称
+        "username": "name",         //登录名
+        "password": "password",     //登录密码
+        "replsets": [
+          {
+            "host": "localhost:27018"   //从库1
+          },
+          {
+            "host": "localhost:27018"   //从库2
+          }
+        ]
+    }
+```
+最简配置
+```
+    "mongodb": {
+      "host": "localhost",
+      "database": "express-standard"
+    }    
+```
 
-
+添加collection只需要在models目录中添加collection定义文件即可,参考user.js
+使用方法(文件名首字母大写即为module名称):
+```
+    User.create({...}).then().catch();
+    User.find({...}).then().catch();
+```
 
 
 

@@ -1,5 +1,6 @@
 require('express-di');
 require("./tools/joiValidate");     //首先替换joi中文包
+require("./env.js");
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -7,7 +8,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mLockSend = require("./middlewares/lockSend.js");
-var session    = require('express-session');
+var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var config = require('config');
 
@@ -34,10 +35,10 @@ app.use(session({
 	resave: false,
 	rolling: true,
 	saveUninitialized: false,
-	cookie: { maxAge: 24 * 60 * 60 * 1000 }
+	cookie: {maxAge: 24 * 60 * 60 * 1000}
 }));
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Origin', req.headers.origin);
 	res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT, PATCH, OPTIONS');
 	res.header('Access-Control-Allow-Headers',

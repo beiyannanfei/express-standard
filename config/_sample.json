@@ -4,6 +4,20 @@
     "port": 6379,
     "db": 0
   },
+  "mongodb": {
+    "host": "localhost",
+    "database": "test",
+    "username": "name",
+    "password": "password",
+    "replsets": [
+      {
+        "host": "localhost:27018"
+      },
+      {
+        "host": "localhost:27018"
+      }
+    ]
+  },
   "logger": {
     "logDir": "/logs",
     "level": "debug",
