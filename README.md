@@ -188,6 +188,7 @@ Joi使用方法参考[API Reference.](https://github.com/hapijs/joi/blob/v10.5.0
 ```
 
 添加collection只需要在models目录中添加collection定义文件即可,参考user.js
+
 使用方法(文件名首字母大写即为module名称):
 ```
     User.create({...}).then().catch();
