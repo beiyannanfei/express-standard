@@ -1,5 +1,5 @@
 var express = require('express');
-var router = express.Router();
+var router = module.exports = express.Router();
 var mLockSend = require("../middlewares/lockSend.js");
 var logger = require("../utils/log")(__filename);
 var Joi = require("joi");
@@ -69,5 +69,5 @@ router.post("/add", function (req, res) {
 	});
 });
 
-module.exports = router;
+
 
